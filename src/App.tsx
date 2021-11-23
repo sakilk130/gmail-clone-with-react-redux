@@ -1,12 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/Counter';
-import './App.css';
 import styled from 'styled-components';
+import Header from './components/Header/Header';
 
 function App() {
-  return <Container>Hello</Container>;
+  return (
+    <Container>
+      <Header />
+    </Container>
+  );
 }
 
 const Container = styled.div``;
+
 export default App;
