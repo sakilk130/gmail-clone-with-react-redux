@@ -11,14 +11,16 @@ type SidebarOptionProps = {
 };
 
 function SidebarOption({ Icon, title, number, selected }: SidebarOptionProps) {
+  console.log(selected);
   return (
-    <SidebarOptionContainer>
+    <SidebarOptionContainer className={`${selected ? 'active' : ''}`}>
       <Icon />
       <h3>{title}</h3>
       <p>{number}</p>
     </SidebarOptionContainer>
   );
 }
+
 const SidebarOptionContainer = styled.div`
   display: flex;
   align-items: center;
@@ -42,13 +44,19 @@ const SidebarOptionContainer = styled.div`
   }
   &:hover,
   &:hover > p,
-  &:hover > h3 &--active,
-  &:active > p,
-  &:active > h3 {
+  &:hover > h3,
+  &.active,
+  &.active > p,
+  &.active > h3 {
     background-color: #fcecec;
     color: #c04b37;
     font-weight: 800 !important;
   }
+
+  &.active > p {
+    display: inline !important;
+  }
+
   &:hover > p {
     display: inline;
   }
