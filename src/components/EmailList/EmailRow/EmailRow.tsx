@@ -60,6 +60,7 @@ const EmailRowMessage = styled.div`
   flex: 0.8;
   align-items: center;
   font-size: 13px;
+  padding: 10px;
   & > h4 {
     width: 400px;
     white-space: nowrap;
