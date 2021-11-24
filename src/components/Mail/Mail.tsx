@@ -1,12 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import {
-  CheckCircle,
-  LabelImportant,
-  MoveToInbox,
-  UnfoldMore,
-} from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import MoveToInboxIcon from '@material-ui/icons/MoveToInbox';
