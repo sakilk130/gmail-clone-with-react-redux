@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { SvgIconTypeMap } from '@material-ui/core';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 
-type SectionProps = {
+interface SectionProps {
   Icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
-  title: string;
-  color: string;
-  selected?: boolean;
-};
+  title: String;
+  color: String;
+  selected?: Boolean;
+}
 
 function Section({ Icon, title, color, selected }: SectionProps) {
   return (

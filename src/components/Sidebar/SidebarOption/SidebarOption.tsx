@@ -3,12 +3,12 @@ import { SvgIconTypeMap } from '@material-ui/core';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import styled from 'styled-components';
 
-type SidebarOptionProps = {
+interface SidebarOptionProps {
   Icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
-  title: string;
-  number: number;
-  selected?: boolean;
-};
+  title: String;
+  number: Number;
+  selected?: Boolean;
+}
 
 function SidebarOption({ Icon, title, number, selected }: SidebarOptionProps) {
   console.log(selected);

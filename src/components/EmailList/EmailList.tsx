@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Checkbox, Icon, IconButton } from '@material-ui/core';
-import { ArrowDropDown, ChevronLeft } from '@material-ui/icons';
+import { Checkbox, IconButton } from '@material-ui/core';
+import { ArrowDropDown } from '@material-ui/icons';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import RedoIcon from '@material-ui/icons/Redo';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -12,6 +12,7 @@ import Section from './Section/Section';
 import InboxIcon from '@material-ui/icons/Inbox';
 import PeopleIcon from '@material-ui/icons/People';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import EmailRow from './EmailRow/EmailRow';
 
 function EmailList() {
   return (
@@ -50,6 +51,29 @@ function EmailList() {
         <Section Icon={PeopleIcon} title="Social" color="#1A73E8" />
         <Section Icon={LocalOfferIcon} title="Promotions" color="green" />
       </EmailListSections>
+      <EmailListRow>
+        <EmailRow
+          id="123"
+          title="Twitter"
+          subject="Follow me!!"
+          description="Click the following button to follow me."
+          time="9am"
+        />
+        <EmailRow
+          id="123"
+          title="Twitter"
+          subject="Follow me!!"
+          description="Click the following button to follow me."
+          time="9am"
+        />
+        <EmailRow
+          id="123"
+          title="Twitter"
+          subject="Follow me!!"
+          description="Click the following button to follow me. Click the following button to follow me. Click the following button to follow me."
+          time="9am"
+        />
+      </EmailListRow>
     </Container>
   );
 }
@@ -81,6 +105,9 @@ const EmailListSections = styled.div`
   border-bottom: 1px solid whitesmoke;
   background-color: white;
   z-index: 999;
+  cursor: pointer;
 `;
+
+const EmailListRow = styled.div``;
 
 export default EmailList;
