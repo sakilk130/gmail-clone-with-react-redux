@@ -2,50 +2,59 @@ import React from 'react';
 import styled from 'styled-components';
 import CloseIcon from '@material-ui/icons/Close';
 import { Button } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { closeSendMessage } from '../../features/mailSlice';
+import db from '../../firebase/config';
+import firebase from 'firebase';
+
+interface IFormInputs {
+  to: string;
+  subject: string;
+  message: string;
+}
 
 function SendMail() {
-  const { register, handleSubmit, watch, errors } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInputs>();
 
-  const onSubmit = (formData: {
-    to: String;
-    subject: String;
-    message: String;
-  }) => {
-    console.log(formData);
+  const dispatch = useDispatch();
+
+  const onSubmit = (data: IFormInputs) => {
+    db.collection('emails').add({
+      to: data.to,
+      subject: data.subject,
+      message: data.subject,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+
+    dispatch(closeSendMessage());
   };
 
   return (
     <Container>
       <SendMailHeader>
         <h3>New Message</h3>
-        <CloseIcon />
+        <CloseIcon onClick={() => dispatch(closeSendMessage())} />
       </SendMailHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          name="to"
-          placeholder="To"
-          {...register('to', { required: true })}
-        />
+        <input placeholder="To" {...register('to', { required: true })} />
         {errors.to && <p className="error">To is required !!</p>}
         <input
-          type="text"
-          name="subject"
           placeholder="Subject"
-          {...register('subject', { required: true })}
+          {...register('subject', { required: true, maxLength: 10 })}
         />
         {errors.subject && <p className="error">Subject is required !!</p>}
 
         <input
-          type="text"
-          name="message"
           placeholder="Message"
           className="message"
           {...register('message', { required: true })}
         />
         {errors.message && <p className="error">Message is required !!</p>}
-
         <SendMailOptions>
           <Button variant="contained" color="primary" type="submit">
             Send

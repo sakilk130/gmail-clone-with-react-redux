@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Checkbox, IconButton } from '@material-ui/core';
 import { ArrowDropDown } from '@material-ui/icons';
@@ -13,8 +13,33 @@ import InboxIcon from '@material-ui/icons/Inbox';
 import PeopleIcon from '@material-ui/icons/People';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import EmailRow from './EmailRow/EmailRow';
+import db from '../../firebase/config';
+import moment from 'moment';
+
+interface IEmails {
+  to: string;
+  title: string;
+  subject: string;
+  message: string;
+  timestamp: string;
+}
 
 function EmailList() {
+  const [emails, setEmails] = useState([]);
+
+  useEffect(() => {
+    db.collection('emails')
+      .orderBy('timestamp', 'desc')
+      .onSnapshot((snapshot: any) =>
+        setEmails(
+          snapshot.docs.map((doc: any) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        )
+      );
+  }, []);
+
   return (
     <Container>
       <EmailListSettings>
@@ -52,27 +77,18 @@ function EmailList() {
         <Section Icon={LocalOfferIcon} title="Promotions" color="green" />
       </EmailListSections>
       <EmailListRow>
-        <EmailRow
-          id="123"
-          title="Twitter"
-          subject="Follow me!!"
-          description="Click the following button to follow me."
-          time="9am"
-        />
-        <EmailRow
-          id="123"
-          title="Twitter"
-          subject="Follow me!!"
-          description="Click the following button to follow me."
-          time="9am"
-        />
-        <EmailRow
-          id="123"
-          title="Twitter"
-          subject="Follow me!!"
-          description="Click the following button to follow me. Click the following button to follow me. Click the following button to follow me."
-          time="9am"
-        />
+        {emails.map(({ id, data }: any) => (
+          <EmailRow
+            key={id}
+            id={id}
+            title={data.to}
+            subject={data.subject}
+            description={data.message}
+            time={moment(
+              new Date(data.timestamp?.toDate()).toUTCString()
+            ).fromNow()}
+          />
+        ))}
       </EmailListRow>
     </Container>
   );
