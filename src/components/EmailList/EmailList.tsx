@@ -15,17 +15,11 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import EmailRow from './EmailRow/EmailRow';
 import db from '../../firebase/config';
 import moment from 'moment';
-
-interface IEmails {
-  to: string;
-  title: string;
-  subject: string;
-  message: string;
-  timestamp: string;
-}
+import Loader from './ContentLoader/Loader';
 
 function EmailList() {
   const [emails, setEmails] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     db.collection('emails')
@@ -38,6 +32,9 @@ function EmailList() {
           }))
         )
       );
+    setTimeout(() => {
+      setLoader(false);
+    }, 1000);
   }, []);
 
   return (
@@ -77,18 +74,22 @@ function EmailList() {
         <Section Icon={LocalOfferIcon} title="Promotions" color="green" />
       </EmailListSections>
       <EmailListRow>
-        {emails.map(({ id, data }: any) => (
-          <EmailRow
-            key={id}
-            id={id}
-            title={data.to}
-            subject={data.subject}
-            description={data.message}
-            time={moment(
-              new Date(data.timestamp?.toDate()).toUTCString()
-            ).fromNow()}
-          />
-        ))}
+        {loader ? (
+          <Loader />
+        ) : (
+          emails.map(({ id, data }: any) => (
+            <EmailRow
+              key={id}
+              id={id}
+              title={data.to}
+              subject={data.subject}
+              description={data.message}
+              time={moment(
+                new Date(data.timestamp?.toDate()).toUTCString()
+              ).fromNow()}
+            />
+          ))
+        )}
       </EmailListRow>
     </Container>
   );

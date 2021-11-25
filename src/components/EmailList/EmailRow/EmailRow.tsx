@@ -6,7 +6,8 @@ import LabelImportantOutlinedIcon from '@material-ui/icons/LabelImportantOutline
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { selectMail } from '../../../features/mailSlice';
-interface EmailRowProps {
+
+interface IEmailRow {
   id: String;
   title: String;
   subject: String;
@@ -14,7 +15,7 @@ interface EmailRowProps {
   time: String;
 }
 
-function EmailRow({ id, title, subject, description, time }: EmailRowProps) {
+function EmailRow({ id, title, subject, description, time }: IEmailRow) {
   const history = useNavigate();
   const dispatch = useDispatch();
 

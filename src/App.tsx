@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -11,11 +11,13 @@ import { selectSendMessageIsOpen } from './features/mailSlice';
 import { login, selectUser } from './features/userSlice';
 import Login from './components/Login/Login';
 import { auth } from './firebase/config';
+import Loader from 'react-loader-spinner';
 
 function App() {
   const sendMessageIsOpen = useSelector(selectSendMessageIsOpen);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     auth.onAuthStateChanged((user: any) => {
@@ -27,12 +29,20 @@ function App() {
             photoURL: user?.photoURL,
           })
         );
+        setLoader(false);
+      } else {
+        setLoader(false);
       }
     });
   }, []);
 
   return (
     <Router>
+      {loader && (
+        <Loading>
+          <Loader type="TailSpin" color="#00BFFF" height={100} width={100} />
+        </Loading>
+      )}
       {!user ? (
         <Login />
       ) : (
@@ -52,6 +62,11 @@ function App() {
   );
 }
 
+const Loading = styled.div`
+  display: grid;
+  place-items: center;
+  height: 100vh;
+`;
 const Container = styled.div`
   height: 100vh;
 `;

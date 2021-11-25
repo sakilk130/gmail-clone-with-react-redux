@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import { logout } from '../../features/userSlice';
 import { auth } from '../../firebase/config';
+import Tooltip from '@material-ui/core/Tooltip';
 
 function Header() {
   const dispatch = useDispatch();
@@ -47,9 +48,11 @@ function Header() {
         <IconButton>
           <NotificationsIcon />
         </IconButton>
-        <Avatar src={user?.photoURL} onClick={signOut} className="avatar">
-          {user?.displayName[0]}
-        </Avatar>
+        <Tooltip title="Logout">
+          <Avatar src={user?.photoURL} onClick={signOut} className="avatar">
+            {user?.displayName[0]}
+          </Avatar>
+        </Tooltip>
       </HeaderRight>
     </HeaderContainer>
   );
