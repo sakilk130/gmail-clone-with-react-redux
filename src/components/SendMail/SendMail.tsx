@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CloseIcon from '@material-ui/icons/Close';
 import { Button } from '@material-ui/core';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { closeSendMessage } from '../../features/mailSlice';
 import db from '../../firebase/config';
@@ -27,7 +27,7 @@ function SendMail() {
     db.collection('emails').add({
       to: data.to,
       subject: data.subject,
-      message: data.subject,
+      message: data.message,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
@@ -45,7 +45,7 @@ function SendMail() {
         {errors.to && <p className="error">To is required !!</p>}
         <input
           placeholder="Subject"
-          {...register('subject', { required: true, maxLength: 10 })}
+          {...register('subject', { required: true })}
         />
         {errors.subject && <p className="error">Subject is required !!</p>}
 

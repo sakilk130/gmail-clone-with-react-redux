@@ -4,7 +4,8 @@ import { Checkbox, IconButton } from '@material-ui/core';
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import LabelImportantOutlinedIcon from '@material-ui/icons/LabelImportantOutlined';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import { selectMail } from '../../../features/mailSlice';
 interface EmailRowProps {
   id: String;
   title: String;
@@ -15,8 +16,24 @@ interface EmailRowProps {
 
 function EmailRow({ id, title, subject, description, time }: EmailRowProps) {
   const history = useNavigate();
+  const dispatch = useDispatch();
+
+  const openMail = () => {
+    dispatch(
+      selectMail({
+        id,
+        title,
+        subject,
+        description,
+        time,
+      })
+    );
+    history('/mail');
+  };
+  // const
+
   return (
-    <Container onClick={() => history('/mail')}>
+    <Container onClick={openMail}>
       <EmailRowOptions>
         <Checkbox />
         <IconButton>
